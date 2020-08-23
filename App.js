@@ -1,30 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 
 export default function App() {
-  const [ count, setCount ] = useState(0)
+  const [ users, setUsers ] = useState([])
   const [ loading, setLoading ] = useState(true)
-  const increment = () => setCount(count + 1)
-  const decrement = () => setCount(count - 1)
+
+  const fetchUsers = async () => {
+    const response = await fetch('https://jsonplaceholder.typicode.com/users')
+    const json = await response.json()
+    setUsers(json)
+    setLoading(false)
+  }
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false)
-    }, 2000)
+    fetchUsers()
   }, [])
 
   return (
     <View style={styles.container}>
-      {
-        loading ?
-          <Text>Cargando...</Text>
-        :
-          <View>
-            <Text style={styles.text}>"{count}"</Text>
-            <Button title="incrementar" onPress={increment} />
-            <Button title="incrementar" onPress={decrement} />
-          </View>
-      }
+      <Text style={styles.text}>
+        {loading ? 'Cargando...' : users[0].name}
+      </Text>
     </View>
   );
 }
