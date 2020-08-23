@@ -1,26 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import React, { useReducer } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
-export default function App() {
-  const [ users, setUsers ] = useState([])
-  const [ loading, setLoading ] = useState(true)
+// actions names
+const INCREMENT = 'INCREMENT'
+const DECREMENT = 'DECREMENT'
 
-  const fetchUsers = async () => {
-    const response = await fetch('https://jsonplaceholder.typicode.com/users')
-    const json = await response.json()
-    setUsers(json)
-    setLoading(false)
+// initial state
+const initialState = {
+  count: 0
+}
+
+// reducer
+const reducer = (state, action) => {
+  switch(action.type) {
+    case INCREMENT: {
+      return { count: state.count + 1 } 
+    }
+    case DECREMENT: {
+      return { count: state.count - 1 }
+    }
+    default: {
+      return state
+    }
   }
+}
 
-  useEffect(() => {
-    fetchUsers()
-  }, [])
-
+export default function App() {
+  const [ state, dispatch ] = useReducer(reducer, initialState)
+  
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>
-        {loading ? 'Cargando...' : users[0].name}
-      </Text>
+      <Text style={styles.text} onPress={() => dispatch({ type: INCREMENT })}> + </Text>
+      <Text style={styles.text}> {state.count} </Text>
+      <Text style={styles.text} onPress={() => dispatch({ type: DECREMENT })}> - </Text>
     </View>
   );
 }
@@ -32,7 +44,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
-    fontSize: 24,
+    fontSize: 50,
     textAlign: 'center'
   },
 });
