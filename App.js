@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useMemo } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 
 // actions names
@@ -14,7 +14,7 @@ const initialState = {
 const reducer = (state, action) => {
   switch(action.type) {
     case INCREMENT: {
-      return { count: state.count + 1 } 
+      return { count: state.count + 1 }
     }
     case DECREMENT: {
       return { count: state.count - 1 }
@@ -25,9 +25,33 @@ const reducer = (state, action) => {
   }
 }
 
+const users = [
+  {
+    name: 'Mario',
+    age: 30,
+  },
+  {
+    name: 'Luigi',
+    age: 28,
+  }
+]
+
 export default function App() {
   const [ state, dispatch ] = useReducer(reducer, initialState)
-  
+  const totalAge = useMemo(() => {
+    let age = 0
+
+    console.log('calculando...')
+
+    users.forEach(x => {
+      age = age + x.age
+    })
+
+    return age
+  }, [users])
+
+  console.log('edad total: ', totalAge)
+
   return (
     <View style={styles.container}>
       <Text style={styles.text} onPress={() => dispatch({ type: INCREMENT })}> + </Text>
