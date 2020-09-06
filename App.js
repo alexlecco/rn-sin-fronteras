@@ -18,9 +18,9 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text} onPress={increment}> + </Text>
-      <Text style={styles.text}> {count} </Text>
       <Text style={styles.text} onPress={decrement}> - </Text>
+      <Text style={styles.text}> {count} </Text>
+      <Text style={styles.text} onPress={increment}> + </Text>
     </View>
   );
 }
@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    flexDirection: 'row',
   },
   text: {
     fontSize: 50,
