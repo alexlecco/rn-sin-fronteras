@@ -1,22 +1,21 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { createAppContainer } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
+import UsersScreen from './screens/Users'
+import PostsScreen from './screens/Posts'
+import DetailScreen from './screens/Detail'
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.item}>Hello Word!</Text>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#000',
-    alignItems: 'center',
-    justifyContent: 'center',
+const AppNavigator = createStackNavigator({
+  Users: {
+    screen: UsersScreen
   },
-  item: {
-    color: '#fff'
+  Posts: {
+    screen: PostsScreen
+  },
+  Detail: {
+    screen: DetailScreen
   }
-});
+}, {
+  initialRouteName: 'Users'
+})
+
+export default createAppContainer(AppNavigator)
