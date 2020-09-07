@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 export default () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.item}>PostsScreen</Text>
+      <Text> PostsScreen </Text>
     </View>
   );
 }
@@ -12,11 +12,7 @@ export default () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  item: {
-    color: '#fff'
   }
 });
