@@ -1,10 +1,16 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-export default () => {
+export default ({ navigation }) => {
+  const body = navigation.getParam('body')
+  const title = navigation.getParam('title')
+  const name = navigation.getParam('name')
+
   return (
     <View style={styles.container}>
-      <Text style={styles.item}>DetailScreen</Text>
+      <Text>Usuario: {name}</Text>
+      <Text>Titulo: {title}</Text>
+      <Text>{body}</Text>
     </View>
   );
 }
@@ -12,11 +18,9 @@ export default () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  item: {
-    color: '#fff'
+    paddingHorizontal: 15,
+    textAlign: 'center'
   }
 });

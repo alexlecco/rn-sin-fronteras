@@ -29,7 +29,10 @@ export default ({ navigation }) => {
             renderItem={({ item }) => 
               <ListItem
                 title={item.name}
-                onPress={() => navigation.navigate('Posts', { user_id: item.id, name: item.name })}
+                onPress={ () => navigation.navigate('Posts', {
+                  user_id: item.id,
+                  name: item.name,
+                })}
               />
             }
             style={styles.list}

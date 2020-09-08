@@ -4,6 +4,7 @@ import ListItem from '../components/ListItem'
 
 export default ({ navigation }) => {
   const userId = navigation.getParam('user_id')
+  const userName = navigation.getParam('name')
   const [ loading, setLoading ] = useState(true)
   const [ posts, setPosts ] = useState([])
 
@@ -30,7 +31,11 @@ export default ({ navigation }) => {
             renderItem={({ item }) => 
               <ListItem
                 title={item.title}
-                onPress={() => navigation.navigate('Posts', { user_id: item.id, name: item.name })}
+                onPress={() => navigation.navigate('Detail', {
+                  title: item.title,
+                  body: item.body,
+                  name: userName
+                })}
               />
             }
             style={styles.list}
