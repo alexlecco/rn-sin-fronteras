@@ -1,10 +1,41 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
+import ListItem from '../components/ListItem'
 
-export default () => {
+export default ({ navigation }) => {
+  const userId = navigation.getParam('user_id')
+  const [ loading, setLoading ] = useState(true)
+  const [ posts, setPosts ] = useState([])
+
+  const fetchPosts = async () => {
+    const response = await fetch('https://jsonplaceholder.typicode.com/posts')
+    const data = await response.json()
+    setPosts(data)
+    setLoading(false)
+  }
+
+  useEffect(() => {
+    fetchPosts()
+  }, [])
+
   return (
     <View style={styles.container}>
-      <Text> PostsScreen </Text>
+      {
+        loading ?
+          <Text>Cargando...</Text>
+        :
+          <FlatList
+            data={posts.filter(x => x.userId === userId)}
+            keyExtractor={ x => String(x.id) }
+            renderItem={({ item }) => 
+              <ListItem
+                title={item.title}
+                onPress={() => navigation.navigate('Posts', { user_id: item.id, name: item.name })}
+              />
+            }
+            style={styles.list}
+          />
+      }
     </View>
   );
 }
