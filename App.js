@@ -1,22 +1,22 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { createAppContainer } from 'react-navigation'
+import { createStackNavigator } from 'react-navigation-stack'
+import MealsScreen from './screens/Meals'
+import Modal from './screens/Modal'
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.item}>Hello Word!</Text>
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#000',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  item: {
-    color: '#fff'
+const AppNavigator = createStackNavigator({
+  Meals: {
+    screen: MealsScreen
   }
-});
+}, {
+  initialRouteName: 'Meals'
+})
+
+const RootStack = createStackNavigator({
+  Main: AppNavigator,
+  Modal: Modal
+}, {
+  mode: 'modal',
+  headerMode: 'none'
+})
+
+export default createAppContainer(RootStack)
