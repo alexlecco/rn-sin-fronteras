@@ -1,29 +1,29 @@
 import React from 'react'
-import { StyleSheet, View, FlatList } from 'react-native'
+import { StyleSheet, View, Text, FlatList } from 'react-native'
 import ListItem from '../components/ListItem'
-
-const data = [
-  {
-    _id: 'lala',
-    name: 'Churrasco',
-    description: "Plato típico! con palta y mayonesa"
-  }
-]
+import useFetch from '../hooks/useFetch'
 
 const Meals = ({ navigation }) => {
+  const { loading, data: meals } = useFetch('https://serverless.alexlecco.vercel.app/api/meals')
+
   return(
     <View style={styles.container}>
-      <FlatList 
-        style={styles.list}
-        data={data}
-        keyExtractor={x => x._id}
-        renderItem={({ item }) => 
-          <ListItem
-            onPress={() => navigation.navigate('Modal', { _id: item._id })}
-            name={item.name}
+      {
+        loading ?
+          <Text>Cargado...</Text>
+        :
+          <FlatList
+            style={styles.list}
+            data={meals}
+            keyExtractor={x => x._id}
+            renderItem={({ item }) => 
+              <ListItem
+                onPress={() => navigation.navigate('Modal', { _id: item._id })}
+                name={item.name}
+              />
+            }
           />
-        }
-      />
+      }
     </View>
   )
 }
